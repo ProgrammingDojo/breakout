@@ -1,16 +1,15 @@
 import { canvas } from "./Canvas.js";
-var Ball = /** @class */ (function () {
-    function Ball() {
-        this.radius = 12;
-        this.x = canvas.canvasWidth / 2;
-        this.y = canvas.canvasHeight - this.radius;
-        var intervalId = this.moveBall();
+export var Ball = /** @class */ (function () {
+    function Ball(x, y) {
+        this.x = x;
+        this.y = y;
+        this.moveX = 2;
+        this.moveY = -2;
     }
     Ball.prototype.drawBall = function (x, y) {
-        canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
         canvas.ctx.fillStyle = "blue";
         canvas.ctx.beginPath();
-        canvas.ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
+        canvas.ctx.arc(x, y, Ball.radius, 0, 2 * Math.PI);
         canvas.ctx.closePath();
         canvas.ctx.fill();
     };
@@ -19,23 +18,17 @@ var Ball = /** @class */ (function () {
      * @returns intervalId For clear the interval
      */
     Ball.prototype.moveBall = function () {
-        var _this = this;
-        var moveX = 2;
-        var moveY = -2;
-        var intervalId = setInterval(function () {
-            _this.x += moveX;
-            _this.y += moveY;
-            // Collision
-            if (_this.x > canvas.canvasWidth - _this.radius || _this.x < _this.radius) {
-                moveX = -moveX;
-            }
-            if (_this.y > canvas.canvasHeight - _this.radius || _this.y < _this.radius) {
-                moveY = -moveY;
-            }
-            _this.drawBall(_this.x, _this.y);
-        }, 10);
-        return intervalId;
+        this.x += this.moveX;
+        this.y += this.moveY;
+        // Collision
+        if (this.x > canvas.canvasWidth - Ball.radius || this.x < Ball.radius) {
+            this.moveX = -this.moveX;
+        }
+        if (this.y > canvas.canvasHeight - Ball.radius || this.y < Ball.radius) {
+            this.moveY = -this.moveY;
+        }
+        this.drawBall(this.x, this.y);
     };
+    Ball.radius = 12;
     return Ball;
 }());
-export { Ball };

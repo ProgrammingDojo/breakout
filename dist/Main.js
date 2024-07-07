@@ -1,5 +1,5 @@
-import { Ball } from "./Ball.js";
+import { Game } from "./Game.js";
 function init() {
-    var ball = new Ball();
+    var game = new Game();
 }
 init();

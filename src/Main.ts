@@ -1,7 +1,6 @@
-import { canvas } from "./Canvas.js";
-import { Ball } from "./Ball.js";
+import { Game } from "./Game.js";
 function init() {
-  const ball = new Ball();
+  const game = new Game();
 }
 
 init();
