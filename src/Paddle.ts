@@ -1,16 +1,27 @@
 import { canvas } from "./Canvas.js";
-export class Paddle {
-  public static paddleSelfHeight: number = 10;
-  public static paddleSelfWidth: number = 80;
-  constructor(public x: number, public y: number) {}
+
+interface IPaddle {
+  /**
+   * @effects draw the paddle on canvas
+   */
+  drawPaddle(): void;
+}
+
+export class Paddle implements IPaddle {
+  constructor(
+    private x: number,
+    private y: number,
+    private paddleSelfWidth: number,
+    private paddleSelfHeight: number
+  ) {}
 
   public drawPaddle(): void {
     canvas.ctx.beginPath();
     canvas.ctx.rect(
       this.x,
       this.y,
-      Paddle.paddleSelfWidth,
-      Paddle.paddleSelfHeight
+      this.paddleSelfWidth,
+      this.paddleSelfHeight
     );
     canvas.ctx.fillStyle = "blue";
     canvas.ctx.fill();
