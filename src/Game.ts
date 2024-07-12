@@ -26,7 +26,11 @@ export class Game {
   private startGame(ball: Ball, paddle: Paddle): NodeJS.Timeout {
     const intervalId = setInterval(() => {
       canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
-      ball.moveBall();
+      ball.moveBall(
+        paddle.paddleX,
+        paddle.paddleSelfWidth,
+        paddle.paddleSelfHeight
+      );
       paddle.movePaddle();
     }, 10);
     return intervalId;

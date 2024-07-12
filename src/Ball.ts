@@ -3,8 +3,15 @@ import { canvas } from "./Canvas.js";
 interface IBall {
   /**
    * @effects change this.x, this.y every frame to move the ball
+   * @param {number} paddleX - get the paddle's current x position to detect collision
+   * @param {number} paddleSelfWidth - get the paddle's width to detect collision
+   * @param {number} paddleSelfHeight - get the paddle's height to detect collision
    */
-  moveBall(): void;
+  moveBall(
+    paddleX: number,
+    paddleSelfWidth: number,
+    paddleSelfHeight: number
+  ): void;
 }
 
 export class Ball implements IBall {
@@ -20,16 +27,35 @@ export class Ball implements IBall {
     canvas.ctx.fill();
   }
 
-  public moveBall(): void {
-    this.x += this.moveX;
-    this.y += this.moveY;
-    // Collision
+  private detectCollision(
+    paddleX: number,
+    paddleSelfWidth: number,
+    paddleSelfHeight: number
+  ): void {
     if (this.x > canvas.canvasWidth - this.radius || this.x < this.radius) {
       this.moveX = -this.moveX;
     }
-    if (this.y > canvas.canvasHeight - this.radius || this.y < this.radius) {
+
+    if (this.y < this.radius) {
       this.moveY = -this.moveY;
     }
+    if (
+      this.y > canvas.canvasHeight - this.radius - paddleSelfHeight &&
+      this.x > paddleX - paddleSelfWidth / 2 &&
+      this.x < paddleX + paddleSelfWidth / 2
+    ) {
+      this.moveY = -this.moveY;
+    }
+  }
+
+  public moveBall(
+    paddleX: number,
+    paddleSelfWidth: number,
+    paddleSelfHeight: number
+  ): void {
+    this.x += this.moveX;
+    this.y += this.moveY;
+    this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
     this.drawBall(this.x, this.y);
   }
 }

@@ -14,16 +14,23 @@ var Ball = /** @class */ (function () {
         canvas.ctx.closePath();
         canvas.ctx.fill();
     };
-    Ball.prototype.moveBall = function () {
-        this.x += this.moveX;
-        this.y += this.moveY;
-        // Collision
+    Ball.prototype.detectCollision = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
         if (this.x > canvas.canvasWidth - this.radius || this.x < this.radius) {
             this.moveX = -this.moveX;
         }
-        if (this.y > canvas.canvasHeight - this.radius || this.y < this.radius) {
+        if (this.y < this.radius) {
             this.moveY = -this.moveY;
         }
+        if (this.y > canvas.canvasHeight - this.radius - paddleSelfHeight &&
+            this.x > paddleX - paddleSelfWidth / 2 &&
+            this.x < paddleX + paddleSelfWidth / 2) {
+            this.moveY = -this.moveY;
+        }
+    };
+    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
+        this.x += this.moveX;
+        this.y += this.moveY;
+        this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
         this.drawBall(this.x, this.y);
     };
     return Ball;
