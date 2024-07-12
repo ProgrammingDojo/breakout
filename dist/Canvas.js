@@ -1,15 +1,41 @@
 var Canvas = /** @class */ (function () {
-    function Canvas(canvasWidth, canvasHeight) {
-        if (canvasWidth === void 0) { canvasWidth = 500; }
-        if (canvasHeight === void 0) { canvasHeight = 500; }
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
-        this.canvasElement =
+    function Canvas() {
+        this._canvasWidth = 500;
+        this._canvasHeight = 500;
+        this._canvasElement =
             document.getElementById("canvas") || null;
-        this.canvasElement.width = canvasWidth;
-        this.canvasElement.height = canvasHeight;
-        this.ctx = this.canvasElement.getContext("2d");
+        this._canvasElement.width = this._canvasWidth;
+        this._canvasElement.height = this._canvasHeight;
+        this._ctx = this._canvasElement.getContext("2d");
     }
+    Object.defineProperty(Canvas.prototype, "ctx", {
+        get: function () {
+            return this._ctx;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Canvas.prototype, "canvasElement", {
+        get: function () {
+            return this._canvasElement;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Canvas.prototype, "canvasWidth", {
+        get: function () {
+            return this._canvasWidth;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Canvas.prototype, "canvasHeight", {
+        get: function () {
+            return this._canvasHeight;
+        },
+        enumerable: false,
+        configurable: true
+    });
     return Canvas;
 }());
 export var canvas = new Canvas();
