@@ -4,10 +4,11 @@ var Canvas = /** @class */ (function () {
         if (canvasHeight === void 0) { canvasHeight = 500; }
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-        var canvasElement = document.getElementById("canvas") || null;
-        canvasElement.width = canvasWidth;
-        canvasElement.height = canvasHeight;
-        this.ctx = canvasElement.getContext("2d");
+        this.canvasElement =
+            document.getElementById("canvas") || null;
+        this.canvasElement.width = canvasWidth;
+        this.canvasElement.height = canvasHeight;
+        this.ctx = this.canvasElement.getContext("2d");
     }
     return Canvas;
 }());

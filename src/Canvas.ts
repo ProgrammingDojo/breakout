@@ -1,15 +1,15 @@
 class Canvas {
   public ctx: CanvasRenderingContext2D;
-
+  public canvasElement: HTMLCanvasElement | null;
   constructor(
     public canvasWidth: number = 500,
     public canvasHeight: number = 500
   ) {
-    const canvasElement =
+    this.canvasElement =
       (document.getElementById("canvas") as HTMLCanvasElement) || null;
-    canvasElement.width = canvasWidth;
-    canvasElement.height = canvasHeight;
-    this.ctx = canvasElement.getContext("2d") as CanvasRenderingContext2D;
+    this.canvasElement.width = canvasWidth;
+    this.canvasElement.height = canvasHeight;
+    this.ctx = this.canvasElement.getContext("2d") as CanvasRenderingContext2D;
   }
 }
 

@@ -18,7 +18,7 @@ var Game = /** @class */ (function () {
         var intervalId = setInterval(function () {
             canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
             ball.moveBall();
-            paddle.drawPaddle();
+            paddle.movePaddle();
         }, 10);
         return intervalId;
     };
