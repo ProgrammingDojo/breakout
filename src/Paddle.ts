@@ -40,7 +40,7 @@ export class Paddle implements IPaddle {
     document.addEventListener("mousemove", (e) => {
       const canvasOffsetLeft =
         canvas.canvasElement!.getBoundingClientRect().left;
-      let xPosition = e.clientX - canvasOffsetLeft;
+      let xPosition = e.clientX - canvasOffsetLeft - this._paddleSelfWidth/2;
       if (xPosition < 0) {
         xPosition = 0;
       }

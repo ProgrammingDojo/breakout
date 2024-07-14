@@ -22,8 +22,8 @@ var Ball = /** @class */ (function () {
             this.moveY = -this.moveY;
         }
         if (this.y > canvas.canvasHeight - this.radius - paddleSelfHeight &&
-            this.x > paddleX - paddleSelfWidth / 2 &&
-            this.x < paddleX + paddleSelfWidth / 2) {
+            this.x > paddleX &&
+            this.x < paddleX + paddleSelfWidth) {
             this.moveY = -this.moveY;
         }
     };

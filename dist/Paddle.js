@@ -21,7 +21,7 @@ var Paddle = /** @class */ (function () {
         var _this = this;
         document.addEventListener("mousemove", function (e) {
             var canvasOffsetLeft = canvas.canvasElement.getBoundingClientRect().left;
-            var xPosition = e.clientX - canvasOffsetLeft;
+            var xPosition = e.clientX - canvasOffsetLeft - _this._paddleSelfWidth / 2;
             if (xPosition < 0) {
                 xPosition = 0;
             }

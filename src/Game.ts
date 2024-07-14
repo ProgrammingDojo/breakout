@@ -9,9 +9,9 @@ export class Game {
     const paddleSelfWidth = 80;
     const paddleSelfHeight = 10;
     const ballStartX = canvas.canvasWidth / 2;
-    const ballStartY = canvas.canvasHeight - ballRadius;
+    const ballStartY = canvas.canvasHeight - ballRadius - paddleSelfHeight;
     const paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
-    const paddleStartY = canvas.canvasHeight - paddleSelfHeight / 2;
+    const paddleStartY = canvas.canvasHeight - paddleSelfHeight;
 
     const ball = new Ball(ballStartX, ballStartY, ballRadius);
     const paddle = new Paddle(
@@ -26,12 +26,12 @@ export class Game {
   private startGame(ball: Ball, paddle: Paddle): NodeJS.Timeout {
     const intervalId = setInterval(() => {
       canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+      paddle.movePaddle();
       ball.moveBall(
         paddle.paddleX,
         paddle.paddleSelfWidth,
         paddle.paddleSelfHeight
       );
-      paddle.movePaddle();
     }, 10);
     return intervalId;
   }
