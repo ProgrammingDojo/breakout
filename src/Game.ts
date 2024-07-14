@@ -8,6 +8,7 @@ interface IGame {
   resumeGame: () => void;
   endGame: () => void;
   setSpeedMultiplier: (speed: number) => void;
+  showGameOver: () => void;
 }
 
 export class Game implements IGame {
@@ -17,7 +18,7 @@ export class Game implements IGame {
   private isPaused: boolean = false;
   private isRunning: boolean = false;
   private lastTime: number = 0;
-  private speedMultiplier: number = 0.1;
+  private speedMultiplier: number = 0.4;
 
   constructor() {
     const ballRadius = 12;
@@ -83,6 +84,16 @@ export class Game implements IGame {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
+  }
+
+  public showGameOver(): void {
+    canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+    canvas.ctx.font = "bold 48px serif";
+    canvas.ctx.fillText(
+      "Game Over",
+      canvas.canvasWidth / 2,
+      canvas.canvasHeight / 2
+    );
   }
 
   public setSpeedMultiplier(speed: number = 1): void {

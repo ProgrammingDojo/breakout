@@ -7,7 +7,7 @@ var Game = /** @class */ (function () {
         this.isPaused = false;
         this.isRunning = false;
         this.lastTime = 0;
-        this.speedMultiplier = 0.1;
+        this.speedMultiplier = 0.4;
         var ballRadius = 12;
         var paddleSelfWidth = 80;
         var paddleSelfHeight = 10;
@@ -55,6 +55,11 @@ var Game = /** @class */ (function () {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
         }
+    };
+    Game.prototype.showGameOver = function () {
+        canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+        canvas.ctx.font = "bold 48px serif";
+        canvas.ctx.fillText("Game Over", canvas.canvasWidth / 2, canvas.canvasHeight / 2);
     };
     Game.prototype.setSpeedMultiplier = function (speed) {
         if (speed === void 0) { speed = 1; }

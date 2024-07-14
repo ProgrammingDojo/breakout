@@ -11,13 +11,13 @@ interface IBall {
     paddleX: number,
     paddleSelfWidth: number,
     paddleSelfHeight: number,
-    deltaTime: number
+    speed: number
   ): void;
 }
 
 export class Ball implements IBall {
-  private moveX = 2;
-  private moveY = -2;
+  private moveX = 1;
+  private moveY = -1;
   constructor(private x: number, private y: number, private radius: number) {}
 
   private drawBall(x: number, y: number): void {
@@ -53,10 +53,10 @@ export class Ball implements IBall {
     paddleX: number,
     paddleSelfWidth: number,
     paddleSelfHeight: number,
-    deltaTime: number
+    speed: number
   ): void {
-    this.x += this.moveX * deltaTime;
-    this.y += this.moveY * deltaTime;
+    this.x += this.moveX * speed;
+    this.y += this.moveY * speed;
     this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
     this.drawBall(this.x, this.y);
   }

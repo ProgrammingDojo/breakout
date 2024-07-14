@@ -4,8 +4,8 @@ var Ball = /** @class */ (function () {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.moveX = 2;
-        this.moveY = -2;
+        this.moveX = 1;
+        this.moveY = -1;
     }
     Ball.prototype.drawBall = function (x, y) {
         canvas.ctx.fillStyle = "blue";
@@ -27,9 +27,9 @@ var Ball = /** @class */ (function () {
             this.moveY = -this.moveY;
         }
     };
-    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight, deltaTime) {
-        this.x += this.moveX * deltaTime;
-        this.y += this.moveY * deltaTime;
+    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight, speed) {
+        this.x += this.moveX * speed;
+        this.y += this.moveY * speed;
         this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
         this.drawBall(this.x, this.y);
     };
