@@ -27,9 +27,9 @@ var Ball = /** @class */ (function () {
             this.moveY = -this.moveY;
         }
     };
-    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
-        this.x += this.moveX;
-        this.y += this.moveY;
+    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight, deltaTime) {
+        this.x += this.moveX * deltaTime;
+        this.y += this.moveY * deltaTime;
         this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
         this.drawBall(this.x, this.y);
     };

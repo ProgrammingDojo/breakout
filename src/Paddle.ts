@@ -4,7 +4,7 @@ interface IPaddle {
   /**
    * @effects move the paddle on canvas based on mouse move
    */
-  movePaddle(): void;
+  movePaddle: () => void;
   paddleX: number;
   paddleSelfWidth: number;
   paddleSelfHeight: number;
@@ -40,7 +40,7 @@ export class Paddle implements IPaddle {
     document.addEventListener("mousemove", (e) => {
       const canvasOffsetLeft =
         canvas.canvasElement!.getBoundingClientRect().left;
-      let xPosition = e.clientX - canvasOffsetLeft - this._paddleSelfWidth/2;
+      let xPosition = e.clientX - canvasOffsetLeft - this._paddleSelfWidth / 2;
       if (xPosition < 0) {
         xPosition = 0;
       }

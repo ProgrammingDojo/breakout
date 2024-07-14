@@ -10,7 +10,8 @@ interface IBall {
   moveBall(
     paddleX: number,
     paddleSelfWidth: number,
-    paddleSelfHeight: number
+    paddleSelfHeight: number,
+    deltaTime: number
   ): void;
 }
 
@@ -51,10 +52,11 @@ export class Ball implements IBall {
   public moveBall(
     paddleX: number,
     paddleSelfWidth: number,
-    paddleSelfHeight: number
+    paddleSelfHeight: number,
+    deltaTime: number
   ): void {
-    this.x += this.moveX;
-    this.y += this.moveY;
+    this.x += this.moveX * deltaTime;
+    this.y += this.moveY * deltaTime;
     this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
     this.drawBall(this.x, this.y);
   }
