@@ -18,36 +18,8 @@ interface IBall {
 export class Ball implements IBall {
   private moveX = 1;
   private moveY = -1;
-  constructor(private x: number, private y: number, private radius: number) {}
-
-  private drawBall(x: number, y: number): void {
-    canvas.ctx.fillStyle = "blue";
-    canvas.ctx.beginPath();
-    canvas.ctx.arc(x, y, this.radius, 0, 2 * Math.PI);
-    canvas.ctx.closePath();
-    canvas.ctx.fill();
-  }
-
-  private detectCollision(
-    paddleX: number,
-    paddleSelfWidth: number,
-    paddleSelfHeight: number
-  ): void {
-    if (this.x > canvas.canvasWidth - this.radius || this.x < this.radius) {
-      this.moveX = -this.moveX;
-    }
-
-    if (this.y < this.radius) {
-      this.moveY = -this.moveY;
-    }
-    if (
-      this.y > canvas.canvasHeight - this.radius - paddleSelfHeight &&
-      this.x > paddleX &&
-      this.x < paddleX + paddleSelfWidth
-    ) {
-      this.moveY = -this.moveY;
-    }
-  }
+  public static ballRadius = 12;
+  constructor(private x: number, private y: number) {}
 
   public moveBall(
     paddleX: number,
@@ -59,5 +31,37 @@ export class Ball implements IBall {
     this.y += this.moveY * speed;
     this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
     this.drawBall(this.x, this.y);
+  }
+
+  private drawBall(x: number, y: number): void {
+    canvas.ctx.fillStyle = "blue";
+    canvas.ctx.beginPath();
+    canvas.ctx.arc(x, y, Ball.ballRadius, 0, 2 * Math.PI);
+    canvas.ctx.closePath();
+    canvas.ctx.fill();
+  }
+
+  private detectCollision(
+    paddleX: number,
+    paddleSelfWidth: number,
+    paddleSelfHeight: number
+  ): void {
+    if (
+      this.x > canvas.canvasWidth - Ball.ballRadius ||
+      this.x < Ball.ballRadius
+    ) {
+      this.moveX = -this.moveX;
+    }
+
+    if (this.y < Ball.ballRadius) {
+      this.moveY = -this.moveY;
+    }
+    if (
+      this.y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
+      this.x > paddleX &&
+      this.x < paddleX + paddleSelfWidth
+    ) {
+      this.moveY = -this.moveY;
+    }
   }
 }

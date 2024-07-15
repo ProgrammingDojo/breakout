@@ -1,11 +1,40 @@
-interface Brick{
+import { canvas } from "./Canvas.js";
+import { Ball } from "./Ball.js";
+interface IBrick {
+  width: number;
 
+  drawBrick: () => void;
+  /**
+   * @param ballX ball's origin x location
+   * @param ballY ball's origin y location
+   */
+  isCollide: (ballX: number, ballY: number) => boolean;
 }
 
-class Brick{
-    
-    constructor(){
+export class Brick implements IBrick {
+  private readonly _width = 50;
+  private readonly _height = 20;
 
+  constructor(private _x: number, private _y: number) {}
+
+  public get width() {
+    return this._width;
+  }
+
+  public get height() {
+    return this._height;
+  }
+
+  public drawBrick(): void {
+    canvas.ctx.fillStyle = "blue";
+    canvas.ctx.strokeStyle = "white";
+    canvas.ctx.rect(this._x, this._y, this._width, this._height);
+  }
+
+  public isCollide(ballX: number, ballY: number) {
+    // ball's upper side collide with the brick's downside
+    if (ballY + Ball.ballRadius === this._y + this._height) {
     }
-
+    return false;
+  }
 }

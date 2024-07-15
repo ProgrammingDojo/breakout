@@ -1,6 +1,7 @@
 import { Ball } from "./Ball.js";
 import { Paddle } from "./Paddle.js";
 import { canvas } from "./Canvas.js";
+import { Brick } from "./Brick.js";
 
 interface IGame {
   startGame: () => void;
@@ -21,15 +22,14 @@ export class Game implements IGame {
   private speedMultiplier: number = 0.4;
 
   constructor() {
-    const ballRadius = 12;
     const paddleSelfWidth = 80;
     const paddleSelfHeight = 10;
     const ballStartX = canvas.canvasWidth / 2;
-    const ballStartY = canvas.canvasHeight - ballRadius - paddleSelfHeight;
+    const ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
     const paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
     const paddleStartY = canvas.canvasHeight - paddleSelfHeight;
 
-    this.ball = new Ball(ballStartX, ballStartY, ballRadius);
+    this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
       paddleStartX,
       paddleStartY,

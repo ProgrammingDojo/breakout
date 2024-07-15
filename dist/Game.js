@@ -8,14 +8,13 @@ var Game = /** @class */ (function () {
         this.isRunning = false;
         this.lastTime = 0;
         this.speedMultiplier = 0.4;
-        var ballRadius = 12;
         var paddleSelfWidth = 80;
         var paddleSelfHeight = 10;
         var ballStartX = canvas.canvasWidth / 2;
-        var ballStartY = canvas.canvasHeight - ballRadius - paddleSelfHeight;
+        var ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
         var paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
         var paddleStartY = canvas.canvasHeight - paddleSelfHeight;
-        this.ball = new Ball(ballStartX, ballStartY, ballRadius);
+        this.ball = new Ball(ballStartX, ballStartY);
         this.paddle = new Paddle(paddleStartX, paddleStartY, paddleSelfWidth, paddleSelfHeight);
         this.startGame();
     }
