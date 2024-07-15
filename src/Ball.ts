@@ -19,7 +19,15 @@ export class Ball implements IBall {
   private moveX = 1;
   private moveY = -1;
   public static ballRadius = 12;
-  constructor(private x: number, private y: number) {}
+  constructor(private _x: number, private _y: number) {}
+
+  get ballX() {
+    return this._x;
+  }
+
+  get ballY() {
+    return this._y;
+  }
 
   public moveBall(
     paddleX: number,
@@ -27,10 +35,10 @@ export class Ball implements IBall {
     paddleSelfHeight: number,
     speed: number
   ): void {
-    this.x += this.moveX * speed;
-    this.y += this.moveY * speed;
+    this._x += this.moveX * speed;
+    this._y += this.moveY * speed;
     this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
-    this.drawBall(this.x, this.y);
+    this.drawBall(this._x, this._y);
   }
 
   private drawBall(x: number, y: number): void {
@@ -47,19 +55,19 @@ export class Ball implements IBall {
     paddleSelfHeight: number
   ): void {
     if (
-      this.x > canvas.canvasWidth - Ball.ballRadius ||
-      this.x < Ball.ballRadius
+      this._x > canvas.canvasWidth - Ball.ballRadius ||
+      this._x < Ball.ballRadius
     ) {
       this.moveX = -this.moveX;
     }
 
-    if (this.y < Ball.ballRadius) {
+    if (this._y < Ball.ballRadius) {
       this.moveY = -this.moveY;
     }
     if (
-      this.y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
-      this.x > paddleX &&
-      this.x < paddleX + paddleSelfWidth
+      this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
+      this._x > paddleX &&
+      this._x < paddleX + paddleSelfWidth
     ) {
       this.moveY = -this.moveY;
     }

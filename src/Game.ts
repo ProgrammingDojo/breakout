@@ -1,8 +1,7 @@
 import { Ball } from "./Ball.js";
 import { Paddle } from "./Paddle.js";
 import { canvas } from "./Canvas.js";
-import { Brick } from "./Brick.js";
-
+import { BrickMatrix } from "./Bricks.js";
 interface IGame {
   startGame: () => void;
   pauseGame: () => void;
@@ -15,6 +14,7 @@ interface IGame {
 export class Game implements IGame {
   private ball: Ball;
   private paddle: Paddle;
+  private brickMatrix: BrickMatrix;
   private animationFrameId: number | null = null;
   private isPaused: boolean = false;
   private isRunning: boolean = false;
@@ -28,7 +28,7 @@ export class Game implements IGame {
     const ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
     const paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
     const paddleStartY = canvas.canvasHeight - paddleSelfHeight;
-
+    this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
       paddleStartX,
@@ -51,6 +51,7 @@ export class Game implements IGame {
 
       if (deltaTime > 0) {
         canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+        this.brickMatrix.drawMatrix();
         this.paddle.movePaddle();
         this.ball.moveBall(
           this.paddle.paddleX,
@@ -58,6 +59,7 @@ export class Game implements IGame {
           this.paddle.paddleSelfHeight,
           this.speedMultiplier * deltaTime
         );
+        this.brickMatrix.detectCollideBrick(this.ball.ballX, this.ball.ballY);
       }
       this.animationFrameId = requestAnimationFrame(animate);
     };

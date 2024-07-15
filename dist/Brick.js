@@ -24,11 +24,19 @@ var Brick = /** @class */ (function () {
     Brick.prototype.drawBrick = function () {
         canvas.ctx.fillStyle = "blue";
         canvas.ctx.strokeStyle = "white";
-        canvas.ctx.rect(this._x, this._y, this._width, this._height);
+        canvas.ctx.lineWidth = 2;
+        canvas.ctx.fillRect(this._x, this._y, this._width, this._height);
+        canvas.ctx.strokeRect(this._x, this._y, this._width, this._height);
     };
     Brick.prototype.isCollide = function (ballX, ballY) {
-        // ball's upper side collide with the brick's downside
-        if (ballY + Ball.ballRadius === this._y + this._height) {
+        // check ball's upper side collide with the brick's downside
+        if (
+        // check y location satisfied the criteria
+        Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height)) {
+            // check x location satisfied the criteria
+            if (ballX > this._x && ballX < this._x + this._width) {
+                return true;
+            }
         }
         return false;
     };

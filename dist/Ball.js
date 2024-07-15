@@ -1,16 +1,30 @@
 import { canvas } from "./Canvas.js";
 var Ball = /** @class */ (function () {
-    function Ball(x, y) {
-        this.x = x;
-        this.y = y;
+    function Ball(_x, _y) {
+        this._x = _x;
+        this._y = _y;
         this.moveX = 1;
         this.moveY = -1;
     }
+    Object.defineProperty(Ball.prototype, "ballX", {
+        get: function () {
+            return this._x;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Ball.prototype, "ballY", {
+        get: function () {
+            return this._y;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight, speed) {
-        this.x += this.moveX * speed;
-        this.y += this.moveY * speed;
+        this._x += this.moveX * speed;
+        this._y += this.moveY * speed;
         this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
-        this.drawBall(this.x, this.y);
+        this.drawBall(this._x, this._y);
     };
     Ball.prototype.drawBall = function (x, y) {
         canvas.ctx.fillStyle = "blue";
@@ -20,16 +34,16 @@ var Ball = /** @class */ (function () {
         canvas.ctx.fill();
     };
     Ball.prototype.detectCollision = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
-        if (this.x > canvas.canvasWidth - Ball.ballRadius ||
-            this.x < Ball.ballRadius) {
+        if (this._x > canvas.canvasWidth - Ball.ballRadius ||
+            this._x < Ball.ballRadius) {
             this.moveX = -this.moveX;
         }
-        if (this.y < Ball.ballRadius) {
+        if (this._y < Ball.ballRadius) {
             this.moveY = -this.moveY;
         }
-        if (this.y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
-            this.x > paddleX &&
-            this.x < paddleX + paddleSelfWidth) {
+        if (this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
+            this._x > paddleX &&
+            this._x < paddleX + paddleSelfWidth) {
             this.moveY = -this.moveY;
         }
     };

@@ -1,6 +1,7 @@
 import { Ball } from "./Ball.js";
 import { Paddle } from "./Paddle.js";
 import { canvas } from "./Canvas.js";
+import { BrickMatrix } from "./Bricks.js";
 var Game = /** @class */ (function () {
     function Game() {
         this.animationFrameId = null;
@@ -14,6 +15,7 @@ var Game = /** @class */ (function () {
         var ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
         var paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
         var paddleStartY = canvas.canvasHeight - paddleSelfHeight;
+        this.brickMatrix = new BrickMatrix();
         this.ball = new Ball(ballStartX, ballStartY);
         this.paddle = new Paddle(paddleStartX, paddleStartY, paddleSelfWidth, paddleSelfHeight);
         this.startGame();
@@ -29,8 +31,10 @@ var Game = /** @class */ (function () {
             _this.lastTime = currentTime;
             if (deltaTime > 0) {
                 canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+                _this.brickMatrix.drawMatrix();
                 _this.paddle.movePaddle();
                 _this.ball.moveBall(_this.paddle.paddleX, _this.paddle.paddleSelfWidth, _this.paddle.paddleSelfHeight, _this.speedMultiplier * deltaTime);
+                _this.brickMatrix.detectCollideBrick(_this.ball.ballX, _this.ball.ballY);
             }
             _this.animationFrameId = requestAnimationFrame(animate);
         };

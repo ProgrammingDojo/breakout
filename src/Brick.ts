@@ -2,7 +2,7 @@ import { canvas } from "./Canvas.js";
 import { Ball } from "./Ball.js";
 interface IBrick {
   width: number;
-
+  height: number;
   drawBrick: () => void;
   /**
    * @param ballX ball's origin x location
@@ -28,12 +28,21 @@ export class Brick implements IBrick {
   public drawBrick(): void {
     canvas.ctx.fillStyle = "blue";
     canvas.ctx.strokeStyle = "white";
-    canvas.ctx.rect(this._x, this._y, this._width, this._height);
+    canvas.ctx.lineWidth = 2;
+    canvas.ctx.fillRect(this._x, this._y, this._width, this._height);
+    canvas.ctx.strokeRect(this._x, this._y, this._width, this._height);
   }
 
   public isCollide(ballX: number, ballY: number) {
-    // ball's upper side collide with the brick's downside
-    if (ballY + Ball.ballRadius === this._y + this._height) {
+    // check ball's upper side collide with the brick's downside
+    if (
+      // check y location satisfied the criteria
+      Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height)
+    ) {
+      // check x location satisfied the criteria
+      if (ballX > this._x && ballX < this._x + this._width) {
+        return true;
+      }
     }
     return false;
   }
