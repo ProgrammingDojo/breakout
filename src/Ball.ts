@@ -1,18 +1,12 @@
 import { canvas } from "./Canvas.js";
 //TODO: check all the methods, divide method to two kinds, side effect or return a value, centralizing where the side effects occur
 interface IBall {
-  /**
-   * @effects change this.x, this.y every frame to move the ball
-   * @param {number} x - get the paddle's current x position to detect collision
-   * @param {number} width - get the paddle's width to detect collision
-   * @param {number} height - get the paddle's height to detect collision
-   */
   moveBall(speed: number): void;
 }
 
 export class Ball implements IBall {
-  private moveX = 1;
-  private moveY = -1;
+  private _moveX = 1;
+  private _moveY = -1;
   public static ballRadius = 12;
   constructor(private _x: number, private _y: number) {}
 
@@ -24,9 +18,18 @@ export class Ball implements IBall {
     return this._y;
   }
 
-  public moveBall(speed: number): void {
-    this._x += this.moveX * speed;
-    this._y += this.moveY * speed;
+  set moveX(newMoveX: number) {
+    this._moveX = newMoveX;
+  }
+
+  set moveY(newMoveY: number) {
+    this._moveY = newMoveY;
+  }
+
+  public moveBall(speed: number): Ball {
+    const newX = this._x + this._moveX * speed;
+    const newY = this._x + this._moveY * speed;
+    return new Ball(newX, newY);
   }
 
   public drawBall(x: number, y: number): void {
@@ -37,25 +40,34 @@ export class Ball implements IBall {
     canvas.ctx.fill();
   }
 
-  public reverseXIncrement(): void {
-    this.moveX = -this.moveX;
-  }
-
-  public reverseYIncrement(): void {
-    this.moveY = -this.moveY;
-  }
-
-  public detectCollisionWithWall(): void {
-    if (
-      this._x > canvas.width - Ball.ballRadius ||
-      this._x < Ball.ballRadius
-    ) {
-      this.reverseXIncrement();
+  private isBallCollideHorizontalWall(): boolean {
+    if (this._x > canvas.width - Ball.ballRadius || this._x < Ball.ballRadius) {
+      return true;
     }
+    return false;
+  }
 
+  private isBallCollideCeiling(): boolean {
     if (this._y < Ball.ballRadius) {
-      this.reverseYIncrement();
+      return true;
     }
+    return false;
+  }
+
+  public detectCollisionWithWall(ball: Ball): Ball {
+    if (this.isBallCollideHorizontalWall()) {
+      const newBall = new Ball(this._x, this._y);
+      newBall.moveX = -this._moveX;
+      return newBall;
+    }
+
+    if (this.isBallCollideCeiling()) {
+      const newBall = new Ball(this._x, this._y);
+      newBall.moveY = -this._moveY;
+      return newBall;
+    }
+
+    return ball;
   }
 
   public detectCollisionWithPaddle(
@@ -68,11 +80,9 @@ export class Ball implements IBall {
       this._x > x &&
       this._x < x + width
     ) {
-      this.reverseYIncrement();
+
     }
   }
 
-  public detectCollisionWithBrick(): void {
-    
-  }
+  public detectCollisionWithBrick(): void {}
 }

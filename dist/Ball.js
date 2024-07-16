@@ -3,8 +3,8 @@ var Ball = /** @class */ (function () {
     function Ball(_x, _y) {
         this._x = _x;
         this._y = _y;
-        this.moveX = 1;
-        this.moveY = -1;
+        this._moveX = 1;
+        this._moveY = -1;
     }
     Object.defineProperty(Ball.prototype, "x", {
         get: function () {
@@ -20,9 +20,24 @@ var Ball = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Ball.prototype, "moveX", {
+        set: function (newMoveX) {
+            this._moveX = newMoveX;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Ball.prototype, "moveY", {
+        set: function (newMoveY) {
+            this._moveY = newMoveY;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Ball.prototype.moveBall = function (speed) {
-        this._x += this.moveX * speed;
-        this._y += this.moveY * speed;
+        var newX = this._x + this._moveX * speed;
+        var newY = this._x + this._moveY * speed;
+        return new Ball(newX, newY);
     };
     Ball.prototype.drawBall = function (x, y) {
         canvas.ctx.fillStyle = "blue";
@@ -31,30 +46,38 @@ var Ball = /** @class */ (function () {
         canvas.ctx.closePath();
         canvas.ctx.fill();
     };
-    Ball.prototype.reverseXIncrement = function () {
-        this.moveX = -this.moveX;
-    };
-    Ball.prototype.reverseYIncrement = function () {
-        this.moveY = -this.moveY;
-    };
-    Ball.prototype.detectCollisionWithWall = function () {
-        if (this._x > canvas.width - Ball.ballRadius ||
-            this._x < Ball.ballRadius) {
-            this.reverseXIncrement();
+    Ball.prototype.isBallCollideHorizontalWall = function () {
+        if (this._x > canvas.width - Ball.ballRadius || this._x < Ball.ballRadius) {
+            return true;
         }
+        return false;
+    };
+    Ball.prototype.isBallCollideCeiling = function () {
         if (this._y < Ball.ballRadius) {
-            this.reverseYIncrement();
+            return true;
         }
+        return false;
+    };
+    Ball.prototype.detectCollisionWithWall = function (ball) {
+        if (this.isBallCollideHorizontalWall()) {
+            var newBall = new Ball(this._x, this._y);
+            newBall.moveX = -this._moveX;
+            return newBall;
+        }
+        if (this.isBallCollideCeiling()) {
+            var newBall = new Ball(this._x, this._y);
+            newBall.moveY = -this._moveY;
+            return newBall;
+        }
+        return ball;
     };
     Ball.prototype.detectCollisionWithPaddle = function (x, width, height) {
         if (this._y > canvas.height - Ball.ballRadius - height &&
             this._x > x &&
             this._x < x + width) {
-            this.reverseYIncrement();
         }
     };
-    Ball.prototype.detectCollisionWithBrick = function () {
-    };
+    Ball.prototype.detectCollisionWithBrick = function () { };
     Ball.ballRadius = 12;
     return Ball;
 }());

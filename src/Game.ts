@@ -30,12 +30,7 @@ export class Game implements IGame {
     const paddleStartY = canvas.height - height;
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
-    this.paddle = new Paddle(
-      paddleStartX,
-      paddleStartY,
-      width,
-      height
-    );
+    this.paddle = new Paddle(paddleStartX, paddleStartY, width, height);
     this.startGame();
   }
 
@@ -53,14 +48,10 @@ export class Game implements IGame {
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.brickMatrix.drawMatrix();
         this.paddle.movePaddle();
-        this.ball.moveBall(this.speedMultiplier * deltaTime);
-        this.ball.detectCollisionWithWall();
-        this.ball.detectCollisionWithPaddle(
-          this.paddle.x,
-          this.paddle.width,
-          this.paddle.height
-        );
-        this.ball.drawBall(this.ball.x, this.ball.y);
+        const movedBall = this.ball.moveBall(this.speedMultiplier * deltaTime);
+        const wallDetectedBall = movedBall.detectCollisionWithWall(movedBall);
+        wallDetectedBall.drawBall(wallDetectedBall.x, wallDetectedBall.y);
+        this.ball = wallDetectedBall;
         this.brickMatrix.collideBrick(this.ball.x, this.ball.y);
       }
       this.animationFrameId = requestAnimationFrame(animate);
@@ -93,11 +84,7 @@ export class Game implements IGame {
   public showGameOver(): void {
     canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.ctx.font = "bold 48px serif";
-    canvas.ctx.fillText(
-      "Game Over",
-      canvas.width / 2,
-      canvas.height / 2
-    );
+    canvas.ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
   }
 
   public setSpeedMultiplier(speed: number = 1): void {
