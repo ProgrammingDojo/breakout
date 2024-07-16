@@ -9,15 +9,15 @@ var Game = /** @class */ (function () {
         this.isRunning = false;
         this.lastTime = 0;
         this.speedMultiplier = 0.4;
-        var paddleSelfWidth = 80;
-        var paddleSelfHeight = 10;
+        var width = 80;
+        var height = 10;
         var ballStartX = canvas.width / 2;
-        var ballStartY = canvas.height - Ball.ballRadius - paddleSelfHeight;
-        var paddleStartX = (canvas.width - paddleSelfWidth) / 2;
-        var paddleStartY = canvas.height - paddleSelfHeight;
+        var ballStartY = canvas.height - Ball.ballRadius - height;
+        var paddleStartX = (canvas.width - width) / 2;
+        var paddleStartY = canvas.height - height;
         this.brickMatrix = new BrickMatrix();
         this.ball = new Ball(ballStartX, ballStartY);
-        this.paddle = new Paddle(paddleStartX, paddleStartY, paddleSelfWidth, paddleSelfHeight);
+        this.paddle = new Paddle(paddleStartX, paddleStartY, width, height);
         this.startGame();
     }
     Game.prototype.startGame = function () {
@@ -35,7 +35,7 @@ var Game = /** @class */ (function () {
                 _this.paddle.movePaddle();
                 _this.ball.moveBall(_this.speedMultiplier * deltaTime);
                 _this.ball.detectCollisionWithWall();
-                _this.ball.detectCollisionWithPaddle(_this.paddle.paddleX, _this.paddle.paddleSelfWidth, _this.paddle.paddleSelfHeight);
+                _this.ball.detectCollisionWithPaddle(_this.paddle.x, _this.paddle.width, _this.paddle.height);
                 _this.ball.drawBall(_this.ball.x, _this.ball.y);
                 _this.brickMatrix.collideBrick(_this.ball.x, _this.ball.y);
             }

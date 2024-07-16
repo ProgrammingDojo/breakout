@@ -1,15 +1,15 @@
 import { canvas } from "./Canvas.js";
 var Paddle = /** @class */ (function () {
-    function Paddle(_x, y, _paddleSelfWidth, _paddleSelfHeight) {
+    function Paddle(_x, y, _width, _height) {
         this._x = _x;
         this.y = y;
-        this._paddleSelfWidth = _paddleSelfWidth;
-        this._paddleSelfHeight = _paddleSelfHeight;
+        this._width = _width;
+        this._height = _height;
         this.setMouseMoveX();
     }
     Paddle.prototype.movePaddle = function () {
         canvas.ctx.beginPath();
-        canvas.ctx.rect(this._x, this.y, this._paddleSelfWidth, this._paddleSelfHeight);
+        canvas.ctx.rect(this._x, this.y, this._width, this._height);
         canvas.ctx.fillStyle = "blue";
         canvas.ctx.fill();
         canvas.ctx.closePath();
@@ -21,33 +21,33 @@ var Paddle = /** @class */ (function () {
         var _this = this;
         document.addEventListener("mousemove", function (e) {
             var canvasOffsetLeft = canvas.canvasElement.getBoundingClientRect().left;
-            var xPosition = e.clientX - canvasOffsetLeft - _this._paddleSelfWidth / 2;
+            var xPosition = e.clientX - canvasOffsetLeft - _this._width / 2;
             if (xPosition < 0) {
                 xPosition = 0;
             }
-            if (xPosition > canvas.width - _this._paddleSelfWidth) {
-                xPosition = canvas.width - _this._paddleSelfWidth;
+            if (xPosition > canvas.width - _this._width) {
+                xPosition = canvas.width - _this._width;
             }
             _this._x = xPosition;
         });
     };
-    Object.defineProperty(Paddle.prototype, "paddleX", {
+    Object.defineProperty(Paddle.prototype, "x", {
         get: function () {
             return this._x;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Paddle.prototype, "paddleSelfWidth", {
+    Object.defineProperty(Paddle.prototype, "width", {
         get: function () {
-            return this._paddleSelfWidth;
+            return this._width;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Paddle.prototype, "paddleSelfHeight", {
+    Object.defineProperty(Paddle.prototype, "height", {
         get: function () {
-            return this._paddleSelfHeight;
+            return this._height;
         },
         enumerable: false,
         configurable: true

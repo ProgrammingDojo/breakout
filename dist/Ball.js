@@ -46,10 +46,10 @@ var Ball = /** @class */ (function () {
             this.reverseYIncrement();
         }
     };
-    Ball.prototype.detectCollisionWithPaddle = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
-        if (this._y > canvas.height - Ball.ballRadius - paddleSelfHeight &&
-            this._x > paddleX &&
-            this._x < paddleX + paddleSelfWidth) {
+    Ball.prototype.detectCollisionWithPaddle = function (x, width, height) {
+        if (this._y > canvas.height - Ball.ballRadius - height &&
+            this._x > x &&
+            this._x < x + width) {
             this.reverseYIncrement();
         }
     };

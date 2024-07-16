@@ -5,17 +5,17 @@ interface IPaddle {
    * @effects move the paddle on canvas based on mouse move
    */
   movePaddle: () => void;
-  paddleX: number;
-  paddleSelfWidth: number;
-  paddleSelfHeight: number;
+  x: number;
+  width: number;
+  height: number;
 }
 
 export class Paddle implements IPaddle {
   constructor(
     private _x: number,
     private readonly y: number,
-    private readonly _paddleSelfWidth: number,
-    private readonly _paddleSelfHeight: number
+    private readonly _width: number,
+    private readonly _height: number
   ) {
     this.setMouseMoveX();
   }
@@ -25,8 +25,8 @@ export class Paddle implements IPaddle {
     canvas.ctx.rect(
       this._x,
       this.y,
-      this._paddleSelfWidth,
-      this._paddleSelfHeight
+      this._width,
+      this._height
     );
     canvas.ctx.fillStyle = "blue";
     canvas.ctx.fill();
@@ -40,26 +40,26 @@ export class Paddle implements IPaddle {
     document.addEventListener("mousemove", (e) => {
       const canvasOffsetLeft =
         canvas.canvasElement!.getBoundingClientRect().left;
-      let xPosition = e.clientX - canvasOffsetLeft - this._paddleSelfWidth / 2;
+      let xPosition = e.clientX - canvasOffsetLeft - this._width / 2;
       if (xPosition < 0) {
         xPosition = 0;
       }
-      if (xPosition > canvas.width - this._paddleSelfWidth) {
-        xPosition = canvas.width - this._paddleSelfWidth;
+      if (xPosition > canvas.width - this._width) {
+        xPosition = canvas.width - this._width;
       }
       this._x = xPosition;
     });
   }
 
-  public get paddleX() {
+  public get x() {
     return this._x;
   }
 
-  public get paddleSelfWidth() {
-    return this._paddleSelfWidth;
+  public get width() {
+    return this._width;
   }
 
-  public get paddleSelfHeight() {
-    return this._paddleSelfHeight;
+  public get height() {
+    return this._height;
   }
 }

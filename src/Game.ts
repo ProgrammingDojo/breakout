@@ -22,19 +22,19 @@ export class Game implements IGame {
   private speedMultiplier: number = 0.4;
 
   constructor() {
-    const paddleSelfWidth = 80;
-    const paddleSelfHeight = 10;
+    const width = 80;
+    const height = 10;
     const ballStartX = canvas.width / 2;
-    const ballStartY = canvas.height - Ball.ballRadius - paddleSelfHeight;
-    const paddleStartX = (canvas.width - paddleSelfWidth) / 2;
-    const paddleStartY = canvas.height - paddleSelfHeight;
+    const ballStartY = canvas.height - Ball.ballRadius - height;
+    const paddleStartX = (canvas.width - width) / 2;
+    const paddleStartY = canvas.height - height;
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
       paddleStartX,
       paddleStartY,
-      paddleSelfWidth,
-      paddleSelfHeight
+      width,
+      height
     );
     this.startGame();
   }
@@ -56,9 +56,9 @@ export class Game implements IGame {
         this.ball.moveBall(this.speedMultiplier * deltaTime);
         this.ball.detectCollisionWithWall();
         this.ball.detectCollisionWithPaddle(
-          this.paddle.paddleX,
-          this.paddle.paddleSelfWidth,
-          this.paddle.paddleSelfHeight
+          this.paddle.x,
+          this.paddle.width,
+          this.paddle.height
         );
         this.ball.drawBall(this.ball.x, this.ball.y);
         this.brickMatrix.collideBrick(this.ball.x, this.ball.y);

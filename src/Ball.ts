@@ -3,9 +3,9 @@ import { canvas } from "./Canvas.js";
 interface IBall {
   /**
    * @effects change this.x, this.y every frame to move the ball
-   * @param {number} paddleX - get the paddle's current x position to detect collision
-   * @param {number} paddleSelfWidth - get the paddle's width to detect collision
-   * @param {number} paddleSelfHeight - get the paddle's height to detect collision
+   * @param {number} x - get the paddle's current x position to detect collision
+   * @param {number} width - get the paddle's width to detect collision
+   * @param {number} height - get the paddle's height to detect collision
    */
   moveBall(speed: number): void;
 }
@@ -59,14 +59,14 @@ export class Ball implements IBall {
   }
 
   public detectCollisionWithPaddle(
-    paddleX: number,
-    paddleSelfWidth: number,
-    paddleSelfHeight: number
+    x: number,
+    width: number,
+    height: number
   ): void {
     if (
-      this._y > canvas.height - Ball.ballRadius - paddleSelfHeight &&
-      this._x > paddleX &&
-      this._x < paddleX + paddleSelfWidth
+      this._y > canvas.height - Ball.ballRadius - height &&
+      this._x > x &&
+      this._x < x + width
     ) {
       this.reverseYIncrement();
     }
