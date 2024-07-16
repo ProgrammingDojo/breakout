@@ -29,6 +29,7 @@ var Brick = /** @class */ (function () {
         canvas.ctx.strokeRect(this._x, this._y, this._width, this._height);
     };
     Brick.prototype.isCollide = function (ballX, ballY) {
+        console.log(ballY - Ball.ballRadius, this._y + this._height);
         // check ball's upper side collide with the brick's downside
         if (ballY - Ball.ballRadius === this._y + this._height &&
             ballX > this._x &&
