@@ -1,19 +1,19 @@
 interface ICanvas {
   ctx: CanvasRenderingContext2D;
-  canvasElement: HTMLCanvasElement | null;
+  canvasElement: HTMLCanvasElement;
   canvasWidth: number;
   canvasHeight: number;
 }
-
+// TODO: Don't add unneeded context, canvasWidth
 class Canvas implements ICanvas {
   private _ctx: CanvasRenderingContext2D;
-  private _canvasElement: HTMLCanvasElement | null;
+  private _canvasElement: HTMLCanvasElement;
   private _canvasWidth: number = 500;
   private _canvasHeight: number = 500;
 
   constructor() {
     this._canvasElement =
-      (document.getElementById("canvas") as HTMLCanvasElement) || null;
+      (document.getElementById("canvas") as HTMLCanvasElement);
     this._canvasElement.width = this._canvasWidth;
     this._canvasElement.height = this._canvasHeight;
     this._ctx = this._canvasElement.getContext(

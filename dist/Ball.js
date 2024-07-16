@@ -6,25 +6,23 @@ var Ball = /** @class */ (function () {
         this.moveX = 1;
         this.moveY = -1;
     }
-    Object.defineProperty(Ball.prototype, "ballX", {
+    Object.defineProperty(Ball.prototype, "x", {
         get: function () {
             return this._x;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ball.prototype, "ballY", {
+    Object.defineProperty(Ball.prototype, "y", {
         get: function () {
             return this._y;
         },
         enumerable: false,
         configurable: true
     });
-    Ball.prototype.moveBall = function (paddleX, paddleSelfWidth, paddleSelfHeight, speed) {
+    Ball.prototype.moveBall = function (speed) {
         this._x += this.moveX * speed;
         this._y += this.moveY * speed;
-        this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
-        this.drawBall(this._x, this._y);
     };
     Ball.prototype.drawBall = function (x, y) {
         canvas.ctx.fillStyle = "blue";
@@ -33,19 +31,29 @@ var Ball = /** @class */ (function () {
         canvas.ctx.closePath();
         canvas.ctx.fill();
     };
-    Ball.prototype.detectCollision = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
+    Ball.prototype.reverseXIncrement = function () {
+        this.moveX = -this.moveX;
+    };
+    Ball.prototype.reverseYIncrement = function () {
+        this.moveY = -this.moveY;
+    };
+    Ball.prototype.detectCollisionWithWall = function () {
         if (this._x > canvas.canvasWidth - Ball.ballRadius ||
             this._x < Ball.ballRadius) {
-            this.moveX = -this.moveX;
+            this.reverseXIncrement();
         }
         if (this._y < Ball.ballRadius) {
-            this.moveY = -this.moveY;
+            this.reverseYIncrement();
         }
+    };
+    Ball.prototype.detectCollisionWithPaddle = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
         if (this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
             this._x > paddleX &&
             this._x < paddleX + paddleSelfWidth) {
-            this.moveY = -this.moveY;
+            this.reverseYIncrement();
         }
+    };
+    Ball.prototype.detectCollisionWithBrick = function () {
     };
     Ball.ballRadius = 12;
     return Ball;

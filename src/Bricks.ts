@@ -12,19 +12,15 @@ interface IBrickMatrix {
    * @param ballX the current rolling ball's x position
    * @param ballY the current rolling ball's y position
    */
-  detectCollideBrick: (ballX: number, ballY: number) => void;
+  collideBrick: (ballX: number, ballY: number) => void;
 }
 
 export class BrickMatrix implements IBrickMatrix {
   private readonly col = canvas.canvasWidth / brickExample.width;
   private readonly row = 3;
-  private _matrix: Array<Array<Brick>> = [];
+  private _matrix: Array<Array<Brick | null>> = [];
   constructor() {
     this.initMatrix();
-  }
-
-  public get matrix() {
-    return this._matrix;
   }
 
   private initMatrix(): void {
@@ -40,17 +36,20 @@ export class BrickMatrix implements IBrickMatrix {
   public drawMatrix(): void {
     for (let i = 0; i < this.row; i++) {
       for (let j = 0; j < this.col; j++) {
-        this._matrix[i][j].drawBrick();
+        const brick = this._matrix[i][j];
+        if (!!brick) {
+          brick.drawBrick();
+        }
       }
     }
   }
 
-  public detectCollideBrick(ballX: number, ballY: number): void {
+  public collideBrick(ballX: number, ballY: number): void {
     for (let i = 0; i < this.row; i++) {
       for (let j = 0; j < this.col; j++) {
-        if (this._matrix[i][j].isCollide(ballX, ballY)) {
-            // how to delete this? I need to keep the empty there and stop the collision
-          this._matrix[i].splice(j, 1);
+        if (this._matrix[i][j] && this._matrix[i][j]!.isCollide(ballX, ballY)) {
+          console.log("hit");
+          this._matrix[i][j] = null;
         }
       }
     }

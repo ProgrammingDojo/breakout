@@ -1,9 +1,10 @@
+// TODO: Don't add unneeded context, canvasWidth
 var Canvas = /** @class */ (function () {
     function Canvas() {
         this._canvasWidth = 500;
         this._canvasHeight = 500;
         this._canvasElement =
-            document.getElementById("canvas") || null;
+            document.getElementById("canvas");
         this._canvasElement.width = this._canvasWidth;
         this._canvasElement.height = this._canvasHeight;
         this._ctx = this._canvasElement.getContext("2d");

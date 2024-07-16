@@ -53,13 +53,15 @@ export class Game implements IGame {
         canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
         this.brickMatrix.drawMatrix();
         this.paddle.movePaddle();
-        this.ball.moveBall(
+        this.ball.moveBall(this.speedMultiplier * deltaTime);
+        this.ball.detectCollisionWithWall();
+        this.ball.detectCollisionWithPaddle(
           this.paddle.paddleX,
           this.paddle.paddleSelfWidth,
-          this.paddle.paddleSelfHeight,
-          this.speedMultiplier * deltaTime
+          this.paddle.paddleSelfHeight
         );
-        this.brickMatrix.detectCollideBrick(this.ball.ballX, this.ball.ballY);
+        this.ball.drawBall(this.ball.x, this.ball.y);
+        this.brickMatrix.collideBrick(this.ball.x, this.ball.y);
       }
       this.animationFrameId = requestAnimationFrame(animate);
     };

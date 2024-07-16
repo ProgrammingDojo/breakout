@@ -1,5 +1,5 @@
 import { canvas } from "./Canvas.js";
-
+//TODO: check all the methods, divide method to two kinds, side effect or return a value, centralizing where the side effects occur
 interface IBall {
   /**
    * @effects change this.x, this.y every frame to move the ball
@@ -7,12 +7,7 @@ interface IBall {
    * @param {number} paddleSelfWidth - get the paddle's width to detect collision
    * @param {number} paddleSelfHeight - get the paddle's height to detect collision
    */
-  moveBall(
-    paddleX: number,
-    paddleSelfWidth: number,
-    paddleSelfHeight: number,
-    speed: number
-  ): void;
+  moveBall(speed: number): void;
 }
 
 export class Ball implements IBall {
@@ -21,27 +16,20 @@ export class Ball implements IBall {
   public static ballRadius = 12;
   constructor(private _x: number, private _y: number) {}
 
-  get ballX() {
+  get x() {
     return this._x;
   }
 
-  get ballY() {
+  get y() {
     return this._y;
   }
 
-  public moveBall(
-    paddleX: number,
-    paddleSelfWidth: number,
-    paddleSelfHeight: number,
-    speed: number
-  ): void {
+  public moveBall(speed: number): void {
     this._x += this.moveX * speed;
     this._y += this.moveY * speed;
-    this.detectCollision(paddleX, paddleSelfWidth, paddleSelfHeight);
-    this.drawBall(this._x, this._y);
   }
 
-  private drawBall(x: number, y: number): void {
+  public drawBall(x: number, y: number): void {
     canvas.ctx.fillStyle = "blue";
     canvas.ctx.beginPath();
     canvas.ctx.arc(x, y, Ball.ballRadius, 0, 2 * Math.PI);
@@ -49,27 +37,42 @@ export class Ball implements IBall {
     canvas.ctx.fill();
   }
 
-  private detectCollision(
+  public reverseXIncrement(): void {
+    this.moveX = -this.moveX;
+  }
+
+  public reverseYIncrement(): void {
+    this.moveY = -this.moveY;
+  }
+
+  public detectCollisionWithWall(): void {
+    if (
+      this._x > canvas.canvasWidth - Ball.ballRadius ||
+      this._x < Ball.ballRadius
+    ) {
+      this.reverseXIncrement();
+    }
+
+    if (this._y < Ball.ballRadius) {
+      this.reverseYIncrement();
+    }
+  }
+
+  public detectCollisionWithPaddle(
     paddleX: number,
     paddleSelfWidth: number,
     paddleSelfHeight: number
   ): void {
     if (
-      this._x > canvas.canvasWidth - Ball.ballRadius ||
-      this._x < Ball.ballRadius
-    ) {
-      this.moveX = -this.moveX;
-    }
-
-    if (this._y < Ball.ballRadius) {
-      this.moveY = -this.moveY;
-    }
-    if (
       this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
       this._x > paddleX &&
       this._x < paddleX + paddleSelfWidth
     ) {
-      this.moveY = -this.moveY;
+      this.reverseYIncrement();
     }
+  }
+
+  public detectCollisionWithBrick(): void {
+    
   }
 }

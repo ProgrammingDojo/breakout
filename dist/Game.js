@@ -33,8 +33,11 @@ var Game = /** @class */ (function () {
                 canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
                 _this.brickMatrix.drawMatrix();
                 _this.paddle.movePaddle();
-                _this.ball.moveBall(_this.paddle.paddleX, _this.paddle.paddleSelfWidth, _this.paddle.paddleSelfHeight, _this.speedMultiplier * deltaTime);
-                _this.brickMatrix.detectCollideBrick(_this.ball.ballX, _this.ball.ballY);
+                _this.ball.moveBall(_this.speedMultiplier * deltaTime);
+                _this.ball.detectCollisionWithWall();
+                _this.ball.detectCollisionWithPaddle(_this.paddle.paddleX, _this.paddle.paddleSelfWidth, _this.paddle.paddleSelfHeight);
+                _this.ball.drawBall(_this.ball.x, _this.ball.y);
+                _this.brickMatrix.collideBrick(_this.ball.x, _this.ball.y);
             }
             _this.animationFrameId = requestAnimationFrame(animate);
         };

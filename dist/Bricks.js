@@ -8,13 +8,6 @@ var BrickMatrix = /** @class */ (function () {
         this._matrix = [];
         this.initMatrix();
     }
-    Object.defineProperty(BrickMatrix.prototype, "matrix", {
-        get: function () {
-            return this._matrix;
-        },
-        enumerable: false,
-        configurable: true
-    });
     BrickMatrix.prototype.initMatrix = function () {
         for (var i = 0; i < this.row; i++) {
             var row = [];
@@ -27,16 +20,19 @@ var BrickMatrix = /** @class */ (function () {
     BrickMatrix.prototype.drawMatrix = function () {
         for (var i = 0; i < this.row; i++) {
             for (var j = 0; j < this.col; j++) {
-                this._matrix[i][j].drawBrick();
+                var brick = this._matrix[i][j];
+                if (!!brick) {
+                    brick.drawBrick();
+                }
             }
         }
     };
-    BrickMatrix.prototype.detectCollideBrick = function (ballX, ballY) {
+    BrickMatrix.prototype.collideBrick = function (ballX, ballY) {
         for (var i = 0; i < this.row; i++) {
             for (var j = 0; j < this.col; j++) {
-                if (this._matrix[i][j].isCollide(ballX, ballY)) {
-                    // how to delete this? I need to keep the empty there and stop the collision
-                    this._matrix[i].splice(j, 1);
+                if (this._matrix[i][j] && this._matrix[i][j].isCollide(ballX, ballY)) {
+                    console.log("hit");
+                    this._matrix[i][j] = null;
                 }
             }
         }

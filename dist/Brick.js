@@ -30,13 +30,10 @@ var Brick = /** @class */ (function () {
     };
     Brick.prototype.isCollide = function (ballX, ballY) {
         // check ball's upper side collide with the brick's downside
-        if (
-        // check y location satisfied the criteria
-        Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height)) {
-            // check x location satisfied the criteria
-            if (ballX > this._x && ballX < this._x + this._width) {
-                return true;
-            }
+        if (ballY - Ball.ballRadius === this._y + this._height &&
+            ballX > this._x &&
+            ballX < this._x + this._width) {
+            return true;
         }
         return false;
     };
