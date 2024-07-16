@@ -16,7 +16,7 @@ interface IBrickMatrix {
 }
 
 export class BrickMatrix implements IBrickMatrix {
-  private readonly col = canvas.canvasWidth / brickExample.width;
+  private readonly col = canvas.width / brickExample.width;
   private readonly row = 3;
   private _matrix: Array<Array<Brick | null>> = [];
   constructor() {

@@ -25,8 +25,8 @@ var Paddle = /** @class */ (function () {
             if (xPosition < 0) {
                 xPosition = 0;
             }
-            if (xPosition > canvas.canvasWidth - _this._paddleSelfWidth) {
-                xPosition = canvas.canvasWidth - _this._paddleSelfWidth;
+            if (xPosition > canvas.width - _this._paddleSelfWidth) {
+                xPosition = canvas.width - _this._paddleSelfWidth;
             }
             _this._x = xPosition;
         });

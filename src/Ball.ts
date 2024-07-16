@@ -47,7 +47,7 @@ export class Ball implements IBall {
 
   public detectCollisionWithWall(): void {
     if (
-      this._x > canvas.canvasWidth - Ball.ballRadius ||
+      this._x > canvas.width - Ball.ballRadius ||
       this._x < Ball.ballRadius
     ) {
       this.reverseXIncrement();
@@ -64,7 +64,7 @@ export class Ball implements IBall {
     paddleSelfHeight: number
   ): void {
     if (
-      this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
+      this._y > canvas.height - Ball.ballRadius - paddleSelfHeight &&
       this._x > paddleX &&
       this._x < paddleX + paddleSelfWidth
     ) {

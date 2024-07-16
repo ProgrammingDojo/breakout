@@ -3,7 +3,7 @@ import { canvas } from "./Canvas.js";
 var brickExample = new Brick(0, 0);
 var BrickMatrix = /** @class */ (function () {
     function BrickMatrix() {
-        this.col = canvas.canvasWidth / brickExample.width;
+        this.col = canvas.width / brickExample.width;
         this.row = 3;
         this._matrix = [];
         this.initMatrix();

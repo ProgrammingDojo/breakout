@@ -38,7 +38,7 @@ var Ball = /** @class */ (function () {
         this.moveY = -this.moveY;
     };
     Ball.prototype.detectCollisionWithWall = function () {
-        if (this._x > canvas.canvasWidth - Ball.ballRadius ||
+        if (this._x > canvas.width - Ball.ballRadius ||
             this._x < Ball.ballRadius) {
             this.reverseXIncrement();
         }
@@ -47,7 +47,7 @@ var Ball = /** @class */ (function () {
         }
     };
     Ball.prototype.detectCollisionWithPaddle = function (paddleX, paddleSelfWidth, paddleSelfHeight) {
-        if (this._y > canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight &&
+        if (this._y > canvas.height - Ball.ballRadius - paddleSelfHeight &&
             this._x > paddleX &&
             this._x < paddleX + paddleSelfWidth) {
             this.reverseYIncrement();

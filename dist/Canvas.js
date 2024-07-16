@@ -1,12 +1,11 @@
-// TODO: Don't add unneeded context, canvasWidth
 var Canvas = /** @class */ (function () {
     function Canvas() {
-        this._canvasWidth = 500;
-        this._canvasHeight = 500;
+        this._width = 500;
+        this._height = 500;
         this._canvasElement =
             document.getElementById("canvas");
-        this._canvasElement.width = this._canvasWidth;
-        this._canvasElement.height = this._canvasHeight;
+        this._canvasElement.width = this._width;
+        this._canvasElement.height = this._height;
         this._ctx = this._canvasElement.getContext("2d");
     }
     Object.defineProperty(Canvas.prototype, "ctx", {
@@ -23,16 +22,16 @@ var Canvas = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Canvas.prototype, "canvasWidth", {
+    Object.defineProperty(Canvas.prototype, "width", {
         get: function () {
-            return this._canvasWidth;
+            return this._width;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Canvas.prototype, "canvasHeight", {
+    Object.defineProperty(Canvas.prototype, "height", {
         get: function () {
-            return this._canvasHeight;
+            return this._height;
         },
         enumerable: false,
         configurable: true

@@ -44,8 +44,8 @@ export class Paddle implements IPaddle {
       if (xPosition < 0) {
         xPosition = 0;
       }
-      if (xPosition > canvas.canvasWidth - this._paddleSelfWidth) {
-        xPosition = canvas.canvasWidth - this._paddleSelfWidth;
+      if (xPosition > canvas.width - this._paddleSelfWidth) {
+        xPosition = canvas.width - this._paddleSelfWidth;
       }
       this._x = xPosition;
     });

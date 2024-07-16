@@ -11,10 +11,10 @@ var Game = /** @class */ (function () {
         this.speedMultiplier = 0.4;
         var paddleSelfWidth = 80;
         var paddleSelfHeight = 10;
-        var ballStartX = canvas.canvasWidth / 2;
-        var ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
-        var paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
-        var paddleStartY = canvas.canvasHeight - paddleSelfHeight;
+        var ballStartX = canvas.width / 2;
+        var ballStartY = canvas.height - Ball.ballRadius - paddleSelfHeight;
+        var paddleStartX = (canvas.width - paddleSelfWidth) / 2;
+        var paddleStartY = canvas.height - paddleSelfHeight;
         this.brickMatrix = new BrickMatrix();
         this.ball = new Ball(ballStartX, ballStartY);
         this.paddle = new Paddle(paddleStartX, paddleStartY, paddleSelfWidth, paddleSelfHeight);
@@ -30,7 +30,7 @@ var Game = /** @class */ (function () {
             var deltaTime = currentTime - _this.lastTime;
             _this.lastTime = currentTime;
             if (deltaTime > 0) {
-                canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+                canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 _this.brickMatrix.drawMatrix();
                 _this.paddle.movePaddle();
                 _this.ball.moveBall(_this.speedMultiplier * deltaTime);
@@ -63,9 +63,9 @@ var Game = /** @class */ (function () {
         }
     };
     Game.prototype.showGameOver = function () {
-        canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+        canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.ctx.font = "bold 48px serif";
-        canvas.ctx.fillText("Game Over", canvas.canvasWidth / 2, canvas.canvasHeight / 2);
+        canvas.ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
     };
     Game.prototype.setSpeedMultiplier = function (speed) {
         if (speed === void 0) { speed = 1; }

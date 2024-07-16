@@ -24,10 +24,10 @@ export class Game implements IGame {
   constructor() {
     const paddleSelfWidth = 80;
     const paddleSelfHeight = 10;
-    const ballStartX = canvas.canvasWidth / 2;
-    const ballStartY = canvas.canvasHeight - Ball.ballRadius - paddleSelfHeight;
-    const paddleStartX = (canvas.canvasWidth - paddleSelfWidth) / 2;
-    const paddleStartY = canvas.canvasHeight - paddleSelfHeight;
+    const ballStartX = canvas.width / 2;
+    const ballStartY = canvas.height - Ball.ballRadius - paddleSelfHeight;
+    const paddleStartX = (canvas.width - paddleSelfWidth) / 2;
+    const paddleStartY = canvas.height - paddleSelfHeight;
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
@@ -50,7 +50,7 @@ export class Game implements IGame {
       this.lastTime = currentTime;
 
       if (deltaTime > 0) {
-        canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+        canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.brickMatrix.drawMatrix();
         this.paddle.movePaddle();
         this.ball.moveBall(this.speedMultiplier * deltaTime);
@@ -91,12 +91,12 @@ export class Game implements IGame {
   }
 
   public showGameOver(): void {
-    canvas.ctx.clearRect(0, 0, canvas.canvasWidth, canvas.canvasHeight);
+    canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.ctx.font = "bold 48px serif";
     canvas.ctx.fillText(
       "Game Over",
-      canvas.canvasWidth / 2,
-      canvas.canvasHeight / 2
+      canvas.width / 2,
+      canvas.height / 2
     );
   }
 
