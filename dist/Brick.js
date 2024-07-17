@@ -1,5 +1,4 @@
 import { canvas } from "./Canvas.js";
-import { Ball } from "./Ball.js";
 var Brick = /** @class */ (function () {
     function Brick(_x, _y) {
         this._x = _x;
@@ -31,7 +30,8 @@ var Brick = /** @class */ (function () {
     Brick.prototype.isCollide = function (ballX, ballY) {
         // check ball's upper side collide with the brick's downside
         // this is where the problem is
-        if (Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height) &&
+        if (ballY > this._y &&
+            ballY < this._y + this._height &&
             ballX > this._x &&
             ballX < this._x + this._width) {
             return true;

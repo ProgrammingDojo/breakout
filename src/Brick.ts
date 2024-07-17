@@ -4,14 +4,14 @@ interface IBrick {
   width: number;
   height: number;
   /**
-   * 
+   *
    * @effects draw a brick
    */
   drawBrick: () => void;
   /**
    * @param ballX ball's origin x location
    * @param ballY ball's origin y location
-   * @return {boolean} whether the brick is collide with the ball 
+   * @return {boolean} whether the brick is collide with the ball
    */
   isCollide: (ballX: number, ballY: number) => boolean;
 }
@@ -42,7 +42,8 @@ export class Brick implements IBrick {
     // check ball's upper side collide with the brick's downside
     // this is where the problem is
     if (
-      Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height) &&
+      ballY > this._y &&
+      ballY < this._y + this._height &&
       ballX > this._x &&
       ballX < this._x + this._width
     ) {

@@ -63,7 +63,7 @@ export class Game implements IGame {
         );
         this.ball.drawBall(this.ball.x, this.ball.y);
 
-        this.brickMatrix.removeCollideBrick(
+        this.brickMatrix = this.brickMatrix.removeCollideBrick(
           this.ball.x,
           this.ball.y
         );

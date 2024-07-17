@@ -13,7 +13,7 @@ interface IBrickMatrix {
    * @param ballY the current rolling ball's y position
    * @return {BrickMatrix} return a new brick matrix
    */
-  removeCollideBrick: (ballX: number, ballY: number) => void;
+  removeCollideBrick: (ballX: number, ballY: number) => BrickMatrix;
 }
 
 export class BrickMatrix implements IBrickMatrix {
@@ -44,14 +44,13 @@ export class BrickMatrix implements IBrickMatrix {
     }
   }
 
-  public removeCollideBrick(ballX: number, ballY: number): void {
-    this._matrix.forEach((row) =>
-      row.forEach((brick) => {
-        if (!!brick && brick.isCollide(ballX, ballY)) {
-          console.log("hit");
-          brick = undefined;
-        }
-      })
+  public removeCollideBrick(ballX: number, ballY: number): BrickMatrix {
+    const newMatrix = new BrickMatrix();
+    newMatrix._matrix = this._matrix.map((row) =>
+      row.map((brick) =>
+        brick && brick.isCollide(ballX, ballY) ? undefined : brick
+      )
     );
+    return newMatrix;
   }
 }
