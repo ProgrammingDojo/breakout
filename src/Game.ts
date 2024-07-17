@@ -53,9 +53,11 @@ export class Game implements IGame {
       if (deltaTime > 0) {
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.paddle.movePaddle();
+
         this.ball = this.ball.moveBall(this.speedMultiplier * deltaTime);
         this.ball = this.ball.detectCollisionWithWall(this.ball);
         this.ball.drawBall(this.ball.x, this.ball.y);
+
         this.brickMatrix = this.brickMatrix.removeCollideBrick(
           this.ball.x,
           this.ball.y

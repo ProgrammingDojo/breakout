@@ -54,6 +54,11 @@ export class Ball implements IBall {
     return false;
   }
 
+  /**
+   * 
+   * @param ball the current ball 
+   * @returns a new ball after examined whether collide with wall  
+   */
   public detectCollisionWithWall(ball: Ball): Ball {
     if (this.isBallCollideHorizontalWall()) {
       const newBall = new Ball(this._x, this._y);

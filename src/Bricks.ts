@@ -4,13 +4,14 @@ import { canvas } from "./Canvas.js";
 const brickExample = new Brick(0, 0);
 interface IBrickMatrix {
   /**
-   *  create a matrix for bricks
+   * @effects draw a matrix for bricks
    */
   drawMatrix: () => void;
 
   /**
    * @param ballX the current rolling ball's x position
    * @param ballY the current rolling ball's y position
+   * @return {BrickMatrix} return a new brick matrix
    */
   removeCollideBrick: (ballX: number, ballY: number) => BrickMatrix;
 }

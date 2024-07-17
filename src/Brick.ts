@@ -3,10 +3,15 @@ import { Ball } from "./Ball.js";
 interface IBrick {
   width: number;
   height: number;
+  /**
+   * 
+   * @effects draw a brick
+   */
   drawBrick: () => void;
   /**
    * @param ballX ball's origin x location
    * @param ballY ball's origin y location
+   * @return {boolean} whether the brick is collide with the ball 
    */
   isCollide: (ballX: number, ballY: number) => boolean;
 }

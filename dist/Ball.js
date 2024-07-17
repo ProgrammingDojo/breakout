@@ -58,6 +58,11 @@ var Ball = /** @class */ (function () {
         }
         return false;
     };
+    /**
+     *
+     * @param ball the current ball
+     * @returns a new ball after examined whether collide with wall
+     */
     Ball.prototype.detectCollisionWithWall = function (ball) {
         if (this.isBallCollideHorizontalWall()) {
             var newBall = new Ball(this._x, this._y);
