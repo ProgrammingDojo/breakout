@@ -25,17 +25,14 @@ var BrickMatrix = /** @class */ (function () {
         }
     };
     BrickMatrix.prototype.removeCollideBrick = function (ballX, ballY) {
-        var newBrickMatrix = new BrickMatrix();
-        newBrickMatrix._matrix = this._matrix.map(function (row) {
-            return row.map(function (brick) {
-                if (brick && brick.isCollide(ballX, ballY)) {
+        this._matrix.forEach(function (row) {
+            return row.forEach(function (brick) {
+                if (!!brick && brick.isCollide(ballX, ballY)) {
                     console.log("hit");
-                    return undefined;
+                    brick = undefined;
                 }
-                return brick;
             });
         });
-        return newBrickMatrix;
     };
     return BrickMatrix;
 }());

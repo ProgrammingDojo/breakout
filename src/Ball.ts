@@ -5,9 +5,9 @@ interface IBall {
 }
 
 export class Ball implements IBall {
-  private _moveX = 1;
-  private _moveY = -1;
   public static ballRadius = 12;
+  private _moveX: number = 1;
+  private _moveY: number = -1;
   constructor(private _x: number, private _y: number) {}
 
   get x() {
@@ -18,18 +18,9 @@ export class Ball implements IBall {
     return this._y;
   }
 
-  set moveX(newMoveX: number) {
-    this._moveX = newMoveX;
-  }
-
-  set moveY(newMoveY: number) {
-    this._moveY = newMoveY;
-  }
-
-  public moveBall(speed: number): Ball {
-    const newX = this._x + this._moveX * speed;
-    const newY = this._x + this._moveY * speed;
-    return new Ball(newX, newY);
+  public moveBall(speed: number): void {
+    this._x += this._moveX * speed;
+    this._y += this._moveY * speed;
   }
 
   public drawBall(x: number, y: number): void {
@@ -55,24 +46,18 @@ export class Ball implements IBall {
   }
 
   /**
-   * 
-   * @param ball the current ball 
-   * @returns a new ball after examined whether collide with wall  
+   *
+   * @param ball the current ball
+   * @returns a new ball after examined whether collide with wall
    */
-  public detectCollisionWithWall(ball: Ball): Ball {
+  public detectCollisionWithWall(): void {
     if (this.isBallCollideHorizontalWall()) {
-      const newBall = new Ball(this._x, this._y);
-      newBall.moveX = -this._moveX;
-      return newBall;
+      this._moveX = -this._moveX;
     }
 
     if (this.isBallCollideCeiling()) {
-      const newBall = new Ball(this._x, this._y);
-      newBall.moveY = -this._moveY;
-      return newBall;
+      this._moveY = -this._moveY;
     }
-
-    return ball;
   }
 
   public detectCollisionWithPaddle(
@@ -85,7 +70,7 @@ export class Ball implements IBall {
       this._x > x &&
       this._x < x + width
     ) {
-
+      this._moveY = -this._moveY;
     }
   }
 

@@ -39,10 +39,10 @@ export class Brick implements IBrick {
   }
 
   public isCollide(ballX: number, ballY: number): boolean {
-    console.log(ballY - Ball.ballRadius, this._y + this._height);
     // check ball's upper side collide with the brick's downside
+    // this is where the problem is
     if (
-      ballY - Ball.ballRadius === this._y + this._height &&
+      Math.floor(ballY - Ball.ballRadius) === Math.floor(this._y + this._height) &&
       ballX > this._x &&
       ballX < this._x + this._width
     ) {

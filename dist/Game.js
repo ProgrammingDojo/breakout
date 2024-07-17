@@ -32,10 +32,11 @@ var Game = /** @class */ (function () {
             if (deltaTime > 0) {
                 canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 _this.paddle.movePaddle();
-                _this.ball = _this.ball.moveBall(_this.speedMultiplier * deltaTime);
-                _this.ball = _this.ball.detectCollisionWithWall(_this.ball);
+                _this.ball.moveBall(_this.speedMultiplier * deltaTime);
+                _this.ball.detectCollisionWithWall();
+                _this.ball.detectCollisionWithPaddle(_this.paddle.x, _this.paddle.width, _this.paddle.height);
                 _this.ball.drawBall(_this.ball.x, _this.ball.y);
-                _this.brickMatrix = _this.brickMatrix.removeCollideBrick(_this.ball.x, _this.ball.y);
+                _this.brickMatrix.removeCollideBrick(_this.ball.x, _this.ball.y);
                 _this.brickMatrix.drawMatrix();
             }
             _this.animationFrameId = requestAnimationFrame(animate);

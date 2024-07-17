@@ -1,5 +1,5 @@
 import { canvas } from "./Canvas.js";
-var Ball = /** @class */ (function () {
+export var Ball = /** @class */ (function () {
     function Ball(_x, _y) {
         this._x = _x;
         this._y = _y;
@@ -20,24 +20,9 @@ var Ball = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Ball.prototype, "moveX", {
-        set: function (newMoveX) {
-            this._moveX = newMoveX;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Ball.prototype, "moveY", {
-        set: function (newMoveY) {
-            this._moveY = newMoveY;
-        },
-        enumerable: false,
-        configurable: true
-    });
     Ball.prototype.moveBall = function (speed) {
-        var newX = this._x + this._moveX * speed;
-        var newY = this._x + this._moveY * speed;
-        return new Ball(newX, newY);
+        this._x += this._moveX * speed;
+        this._y += this._moveY * speed;
     };
     Ball.prototype.drawBall = function (x, y) {
         canvas.ctx.fillStyle = "blue";
@@ -63,27 +48,22 @@ var Ball = /** @class */ (function () {
      * @param ball the current ball
      * @returns a new ball after examined whether collide with wall
      */
-    Ball.prototype.detectCollisionWithWall = function (ball) {
+    Ball.prototype.detectCollisionWithWall = function () {
         if (this.isBallCollideHorizontalWall()) {
-            var newBall = new Ball(this._x, this._y);
-            newBall.moveX = -this._moveX;
-            return newBall;
+            this._moveX = -this._moveX;
         }
         if (this.isBallCollideCeiling()) {
-            var newBall = new Ball(this._x, this._y);
-            newBall.moveY = -this._moveY;
-            return newBall;
+            this._moveY = -this._moveY;
         }
-        return ball;
     };
     Ball.prototype.detectCollisionWithPaddle = function (x, width, height) {
         if (this._y > canvas.height - Ball.ballRadius - height &&
             this._x > x &&
             this._x < x + width) {
+            this._moveY = -this._moveY;
         }
     };
     Ball.prototype.detectCollisionWithBrick = function () { };
     Ball.ballRadius = 12;
     return Ball;
 }());
-export { Ball };
