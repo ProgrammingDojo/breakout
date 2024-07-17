@@ -22,15 +22,21 @@ export class Game implements IGame {
   private speedMultiplier: number = 0.4;
 
   constructor() {
-    const width = 80;
-    const height = 10;
+    const paddleWidth = 80;
+    const paddleHeight = 10;
     const ballStartX = canvas.width / 2;
-    const ballStartY = canvas.height - Ball.ballRadius - height;
-    const paddleStartX = (canvas.width - width) / 2;
-    const paddleStartY = canvas.height - height;
+    const ballStartY = canvas.height - Ball.ballRadius - paddleHeight;
+    const paddleStartX = (canvas.width - paddleWidth) / 2;
+    const paddleStartY = canvas.height - paddleHeight;
+
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
-    this.paddle = new Paddle(paddleStartX, paddleStartY, width, height);
+    this.paddle = new Paddle(
+      paddleStartX,
+      paddleStartY,
+      paddleWidth,
+      paddleHeight
+    );
     this.startGame();
   }
 
@@ -46,13 +52,15 @@ export class Game implements IGame {
 
       if (deltaTime > 0) {
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.brickMatrix.drawMatrix();
         this.paddle.movePaddle();
-        const movedBall = this.ball.moveBall(this.speedMultiplier * deltaTime);
-        const wallDetectedBall = movedBall.detectCollisionWithWall(movedBall);
-        wallDetectedBall.drawBall(wallDetectedBall.x, wallDetectedBall.y);
-        this.ball = wallDetectedBall;
-        this.brickMatrix.collideBrick(this.ball.x, this.ball.y);
+        this.ball = this.ball.moveBall(this.speedMultiplier * deltaTime);
+        this.ball = this.ball.detectCollisionWithWall(this.ball);
+        this.ball.drawBall(this.ball.x, this.ball.y);
+        this.brickMatrix = this.brickMatrix.removeCollideBrick(
+          this.ball.x,
+          this.ball.y
+        );
+        this.brickMatrix.drawMatrix();
       }
       this.animationFrameId = requestAnimationFrame(animate);
     };
