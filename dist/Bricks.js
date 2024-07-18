@@ -8,6 +8,13 @@ var BrickMatrix = /** @class */ (function () {
         this._matrix = [];
         this._matrix = this.initMatrix();
     }
+    Object.defineProperty(BrickMatrix.prototype, "matrix", {
+        get: function () {
+            return this._matrix;
+        },
+        enumerable: false,
+        configurable: true
+    });
     BrickMatrix.prototype.initMatrix = function () {
         var _this = this;
         return Array.from({ length: this.row }, function (_, i) {

@@ -61,6 +61,7 @@ export class Game implements IGame {
           this.paddle.width,
           this.paddle.height
         );
+        this.ball.detectCollisionWithBrickMatrix(this.brickMatrix);
         this.ball.drawBall(this.ball.x, this.ball.y);
 
         this.brickMatrix = this.brickMatrix.removeCollideBrick(

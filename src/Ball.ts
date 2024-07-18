@@ -1,3 +1,4 @@
+import { BrickMatrix } from "./Bricks";
 import { canvas } from "./Canvas.js";
 //TODO: check all the methods, divide method to two kinds, side effect or return a value, centralizing where the side effects occur
 interface IBall {
@@ -61,18 +62,26 @@ export class Ball implements IBall {
   }
 
   public detectCollisionWithPaddle(
-    x: number,
-    width: number,
-    height: number
+    paddleX: number,
+    paddleWidth: number,
+    paddleHeight: number
   ): void {
     if (
-      this._y > canvas.height - Ball.ballRadius - height &&
-      this._x > x &&
-      this._x < x + width
+      this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+      this._x > paddleX &&
+      this._x < paddleX + paddleWidth
     ) {
       this._moveY = -this._moveY;
     }
   }
 
-  public detectCollisionWithBrick(): void {}
+  public detectCollisionWithBrickMatrix(brickMatrix: BrickMatrix): void {
+    brickMatrix.matrix.forEach((row) => {
+      row.forEach((brick) => {
+        if (!!brick && brick.isCollide(this._x, this._y)) {
+          this._moveY = -this._moveY;
+        }
+      });
+    });
+  }
 }

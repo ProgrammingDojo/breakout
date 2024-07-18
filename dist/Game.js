@@ -35,6 +35,7 @@ var Game = /** @class */ (function () {
                 _this.ball.moveBall(_this.speedMultiplier * deltaTime);
                 _this.ball.detectCollisionWithWall();
                 _this.ball.detectCollisionWithPaddle(_this.paddle.x, _this.paddle.width, _this.paddle.height);
+                _this.ball.detectCollisionWithBrickMatrix(_this.brickMatrix);
                 _this.ball.drawBall(_this.ball.x, _this.ball.y);
                 _this.brickMatrix = _this.brickMatrix.removeCollideBrick(_this.ball.x, _this.ball.y);
                 _this.brickMatrix.drawMatrix();

@@ -56,14 +56,23 @@ export var Ball = /** @class */ (function () {
             this._moveY = -this._moveY;
         }
     };
-    Ball.prototype.detectCollisionWithPaddle = function (x, width, height) {
-        if (this._y > canvas.height - Ball.ballRadius - height &&
-            this._x > x &&
-            this._x < x + width) {
+    Ball.prototype.detectCollisionWithPaddle = function (paddleX, paddleWidth, paddleHeight) {
+        if (this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+            this._x > paddleX &&
+            this._x < paddleX + paddleWidth) {
             this._moveY = -this._moveY;
         }
     };
-    Ball.prototype.detectCollisionWithBrick = function () { };
+    Ball.prototype.detectCollisionWithBrickMatrix = function (brickMatrix) {
+        var _this = this;
+        brickMatrix.matrix.forEach(function (row) {
+            row.forEach(function (brick) {
+                if (!!brick && brick.isCollide(_this._x, _this._y)) {
+                    _this._moveY = -_this._moveY;
+                }
+            });
+        });
+    };
     Ball.ballRadius = 12;
     return Ball;
 }());

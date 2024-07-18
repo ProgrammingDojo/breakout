@@ -24,6 +24,10 @@ export class BrickMatrix implements IBrickMatrix {
     this._matrix = this.initMatrix();
   }
 
+  get matrix() {
+    return this._matrix;
+  }
+
   private initMatrix(): Array<Array<Brick | undefined>> {
     return Array.from({ length: this.row }, (_, i) =>
       Array.from(
