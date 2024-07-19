@@ -11,6 +11,13 @@ interface IGame {
   showGameOver: () => void;
 }
 
+const paddleWidth = 80;
+const paddleHeight = 10;
+const ballStartX = canvas.width / 2;
+const ballStartY = canvas.height - Ball.ballRadius - paddleHeight;
+const paddleStartX = (canvas.width - paddleWidth) / 2;
+const paddleStartY = canvas.height - paddleHeight;
+
 export class Game implements IGame {
   private ball: Ball;
   private paddle: Paddle;
@@ -20,15 +27,10 @@ export class Game implements IGame {
   private isRunning: boolean = false;
   private lastTime: number = 0;
   private speedMultiplier: number = 0.4;
+  private lives: number;
 
   constructor() {
-    const paddleWidth = 80;
-    const paddleHeight = 10;
-    const ballStartX = canvas.width / 2;
-    const ballStartY = canvas.height - Ball.ballRadius - paddleHeight;
-    const paddleStartX = (canvas.width - paddleWidth) / 2;
-    const paddleStartY = canvas.height - paddleHeight;
-
+    this.lives = 3;
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
@@ -38,6 +40,10 @@ export class Game implements IGame {
       paddleHeight
     );
     this.startGame();
+  }
+
+  private resetBall(): void {
+    this.ball = new Ball(ballStartX, ballStartY);
   }
 
   public startGame(): void {
@@ -55,6 +61,21 @@ export class Game implements IGame {
         this.paddle.movePaddle();
 
         this.ball.moveBall(this.speedMultiplier * deltaTime);
+        if (
+          this.ball.isBallCollideFloor(
+            this.paddle.x,
+            this.paddle.width,
+            this.paddle.height
+          )
+        ) {
+          if (this.lives > 0) {
+            this.lives--;
+            this.resetBall();
+          } else {
+            this.endGame();
+            this.showGameOver();
+          }
+        }
         this.ball.detectCollisionWithWall();
         this.ball.detectCollisionWithPaddle(
           this.paddle.x,

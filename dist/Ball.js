@@ -1,5 +1,5 @@
 import { canvas } from "./Canvas.js";
-export var Ball = /** @class */ (function () {
+var Ball = /** @class */ (function () {
     function Ball(_x, _y) {
         this._x = _x;
         this._y = _y;
@@ -43,6 +43,22 @@ export var Ball = /** @class */ (function () {
         }
         return false;
     };
+    Ball.prototype.isBallCollidePaddle = function (paddleX, paddleWidth, paddleHeight) {
+        if (this._y < canvas.height - paddleHeight &&
+            this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+            this._x > paddleX &&
+            this._x < paddleX + paddleWidth) {
+            return true;
+        }
+        return false;
+    };
+    Ball.prototype.isBallCollideFloor = function (paddleX, paddleWidth, paddleHeight) {
+        if (this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+            (this._x <= paddleX || this._x >= paddleX + paddleWidth)) {
+            return true;
+        }
+        return false;
+    };
     /**
      *
      * @param ball the current ball
@@ -57,9 +73,7 @@ export var Ball = /** @class */ (function () {
         }
     };
     Ball.prototype.detectCollisionWithPaddle = function (paddleX, paddleWidth, paddleHeight) {
-        if (this._y > canvas.height - Ball.ballRadius - paddleHeight &&
-            this._x > paddleX &&
-            this._x < paddleX + paddleWidth) {
+        if (this.isBallCollidePaddle(paddleX, paddleWidth, paddleHeight)) {
             this._moveY = -this._moveY;
         }
     };
@@ -76,3 +90,4 @@ export var Ball = /** @class */ (function () {
     Ball.ballRadius = 12;
     return Ball;
 }());
+export { Ball };

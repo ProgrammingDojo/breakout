@@ -2,6 +2,12 @@ import { Ball } from "./Ball.js";
 import { Paddle } from "./Paddle.js";
 import { canvas } from "./Canvas.js";
 import { BrickMatrix } from "./Bricks.js";
+var paddleWidth = 80;
+var paddleHeight = 10;
+var ballStartX = canvas.width / 2;
+var ballStartY = canvas.height - Ball.ballRadius - paddleHeight;
+var paddleStartX = (canvas.width - paddleWidth) / 2;
+var paddleStartY = canvas.height - paddleHeight;
 var Game = /** @class */ (function () {
     function Game() {
         this.animationFrameId = null;
@@ -9,17 +15,15 @@ var Game = /** @class */ (function () {
         this.isRunning = false;
         this.lastTime = 0;
         this.speedMultiplier = 0.4;
-        var paddleWidth = 80;
-        var paddleHeight = 10;
-        var ballStartX = canvas.width / 2;
-        var ballStartY = canvas.height - Ball.ballRadius - paddleHeight;
-        var paddleStartX = (canvas.width - paddleWidth) / 2;
-        var paddleStartY = canvas.height - paddleHeight;
+        this.lives = 3;
         this.brickMatrix = new BrickMatrix();
         this.ball = new Ball(ballStartX, ballStartY);
         this.paddle = new Paddle(paddleStartX, paddleStartY, paddleWidth, paddleHeight);
         this.startGame();
     }
+    Game.prototype.resetBall = function () {
+        this.ball = new Ball(ballStartX, ballStartY);
+    };
     Game.prototype.startGame = function () {
         var _this = this;
         this.isRunning = true;
@@ -33,6 +37,16 @@ var Game = /** @class */ (function () {
                 canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
                 _this.paddle.movePaddle();
                 _this.ball.moveBall(_this.speedMultiplier * deltaTime);
+                if (_this.ball.isBallCollideFloor(_this.paddle.x, _this.paddle.width, _this.paddle.height)) {
+                    if (_this.lives > 0) {
+                        _this.lives--;
+                        _this.resetBall();
+                    }
+                    else {
+                        _this.endGame();
+                        _this.showGameOver();
+                    }
+                }
                 _this.ball.detectCollisionWithWall();
                 _this.ball.detectCollisionWithPaddle(_this.paddle.x, _this.paddle.width, _this.paddle.height);
                 _this.ball.detectCollisionWithBrickMatrix(_this.brickMatrix);

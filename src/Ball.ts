@@ -46,6 +46,36 @@ export class Ball implements IBall {
     return false;
   }
 
+  private isBallCollidePaddle(
+    paddleX: number,
+    paddleWidth: number,
+    paddleHeight: number
+  ): boolean {
+    if (
+      this._y < canvas.height - paddleHeight &&
+      this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+      this._x > paddleX &&
+      this._x < paddleX + paddleWidth
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  public isBallCollideFloor(
+    paddleX: number,
+    paddleWidth: number,
+    paddleHeight: number
+  ): boolean {
+    if (
+      this._y > canvas.height - Ball.ballRadius - paddleHeight &&
+      (this._x <= paddleX || this._x >= paddleX + paddleWidth)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    *
    * @param ball the current ball
@@ -66,11 +96,7 @@ export class Ball implements IBall {
     paddleWidth: number,
     paddleHeight: number
   ): void {
-    if (
-      this._y > canvas.height - Ball.ballRadius - paddleHeight &&
-      this._x > paddleX &&
-      this._x < paddleX + paddleWidth
-    ) {
+    if (this.isBallCollidePaddle(paddleX, paddleWidth, paddleHeight)) {
       this._moveY = -this._moveY;
     }
   }

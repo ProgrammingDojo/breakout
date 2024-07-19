@@ -1,5 +1,4 @@
 import { canvas } from "./Canvas.js";
-import { Ball } from "./Ball.js";
 interface IBrick {
   width: number;
   height: number;
