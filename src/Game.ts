@@ -10,7 +10,7 @@ interface IGame {
   setSpeedMultiplier: (speed: number) => void;
   showGameOver: () => void;
 }
-
+// Need to extract all the constant to a new file, it will be better
 const paddleWidth = 80;
 const paddleHeight = 10;
 const ballStartX = canvas.width / 2;
@@ -27,10 +27,10 @@ export class Game implements IGame {
   private isRunning: boolean = false;
   private lastTime: number = 0;
   private speedMultiplier: number = 0.4;
-  private lives: number;
+  private _lives: number;
 
   constructor() {
-    this.lives = 3;
+    this._lives = 3;
     this.brickMatrix = new BrickMatrix();
     this.ball = new Ball(ballStartX, ballStartY);
     this.paddle = new Paddle(
@@ -40,6 +40,10 @@ export class Game implements IGame {
       paddleHeight
     );
     this.startGame();
+  }
+
+  public get lives() {
+    return this._lives;
   }
 
   private resetBall(): void {
@@ -68,8 +72,8 @@ export class Game implements IGame {
             this.paddle.height
           )
         ) {
-          if (this.lives > 0) {
-            this.lives--;
+          if (this._lives > 0) {
+            this._lives--;
             this.resetBall();
           } else {
             this.endGame();
@@ -121,7 +125,7 @@ export class Game implements IGame {
   public showGameOver(): void {
     canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.ctx.font = "bold 48px serif";
-    canvas.ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+    canvas.ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
   }
 
   public setSpeedMultiplier(speed: number = 1): void {

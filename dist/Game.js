@@ -2,6 +2,7 @@ import { Ball } from "./Ball.js";
 import { Paddle } from "./Paddle.js";
 import { canvas } from "./Canvas.js";
 import { BrickMatrix } from "./Bricks.js";
+// Need to extract all the constant to a new file, it will be better
 var paddleWidth = 80;
 var paddleHeight = 10;
 var ballStartX = canvas.width / 2;
@@ -15,12 +16,19 @@ var Game = /** @class */ (function () {
         this.isRunning = false;
         this.lastTime = 0;
         this.speedMultiplier = 0.4;
-        this.lives = 3;
+        this._lives = 3;
         this.brickMatrix = new BrickMatrix();
         this.ball = new Ball(ballStartX, ballStartY);
         this.paddle = new Paddle(paddleStartX, paddleStartY, paddleWidth, paddleHeight);
         this.startGame();
     }
+    Object.defineProperty(Game.prototype, "lives", {
+        get: function () {
+            return this._lives;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Game.prototype.resetBall = function () {
         this.ball = new Ball(ballStartX, ballStartY);
     };
@@ -38,8 +46,8 @@ var Game = /** @class */ (function () {
                 _this.paddle.movePaddle();
                 _this.ball.moveBall(_this.speedMultiplier * deltaTime);
                 if (_this.ball.isBallCollideFloor(_this.paddle.x, _this.paddle.width, _this.paddle.height)) {
-                    if (_this.lives > 0) {
-                        _this.lives--;
+                    if (_this._lives > 0) {
+                        _this._lives--;
                         _this.resetBall();
                     }
                     else {
@@ -80,7 +88,7 @@ var Game = /** @class */ (function () {
     Game.prototype.showGameOver = function () {
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height);
         canvas.ctx.font = "bold 48px serif";
-        canvas.ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+        canvas.ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
     };
     Game.prototype.setSpeedMultiplier = function (speed) {
         if (speed === void 0) { speed = 1; }

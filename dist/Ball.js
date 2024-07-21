@@ -1,5 +1,5 @@
 import { canvas } from "./Canvas.js";
-var Ball = /** @class */ (function () {
+export var Ball = /** @class */ (function () {
     function Ball(_x, _y) {
         this._x = _x;
         this._y = _y;
@@ -90,4 +90,3 @@ var Ball = /** @class */ (function () {
     Ball.ballRadius = 12;
     return Ball;
 }());
-export { Ball };

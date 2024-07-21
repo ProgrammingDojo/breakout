@@ -7,10 +7,24 @@
   </head>
   <body>
     <div style="display: flex; justify-content: center;">
-      <canvas id="canvas" style="border: 1px solid black; margin-top: 50px; background-color: gainsboro;">
+      <canvas
+        id="canvas"
+        style="
+          border: 1px solid black;
+          margin-top: 50px;
+          background-color: gainsboro;
+        "
+      >
         This is a breakout game canvas, if you see this, it means you need to
         change your browswer
       </canvas>
+      <div style="margin-top: 60vh; margin-left: 10px;">
+        <div>Life: <span id="life"></span></div>
+        <div>
+          <button id="reset">Reset</button>
+          <button id="pause">pause</button>
+        </div>
+      </div>
     </div>
     <script type="module" src="dist/Main.js"></script>
   </body>
